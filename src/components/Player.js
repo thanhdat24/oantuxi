@@ -18,16 +18,22 @@ class Player extends Component {
         <div className="row">
           {this.props.mangTuXi.map((item, index) => {
             // Xét status cho item
-            let status = {};
+            let border = {};
             if (item.status) {
-              status = {
+              border = {
                 border: "4px solid #eaab2c",
                 borderRadius: "50%",
               };
             }
             return (
               <div className="col-4">
-                <button style={status} className="btnItem">
+                <button
+                  onClick={() => {
+                    this.props.datCuoc(item.ma);
+                  }}
+                  style={border}
+                  className="btnItem"
+                >
                   {" "}
                   <img
                     style={{ width: 40 }}
@@ -47,4 +53,15 @@ class Player extends Component {
 const mapStateToProps = (state) => {
   return { mangTuXi: state.GameTuXiReducer.mangTuXi };
 };
-export default connect(mapStateToProps)(Player);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    datCuoc: (maCuoc) => {
+      dispatch({
+        type: "CHON_KEO_BUA_BAO",
+        maCuoc,
+      });
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Player);

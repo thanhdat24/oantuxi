@@ -5,8 +5,9 @@ import React, { Component } from "react";
 import Computer from "./Computer";
 import InFoGame from "./InFoGame";
 import Player from "./Player";
+import { connect } from "react-redux";
 
-export default class GameTuXi extends Component {
+class GameTuXi extends Component {
   render() {
     return (
       <div className="game">
@@ -16,7 +17,14 @@ export default class GameTuXi extends Component {
           </div>
           <div className="col-4">
             <InFoGame />
-            <button className="game__button mt-4">Play game</button>
+            <button
+              onClick={() => {
+                this.props.playGame();
+              }}
+              className="game__button mt-4"
+            >
+              Play game
+            </button>
           </div>
           <div className="col-4">
             <Computer />
@@ -26,3 +34,22 @@ export default class GameTuXi extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    playGame: () => {
+      let count = 0;
+      let randomComputerItem = setInterval(() => {
+        dispatch({
+          type: "RANDOM",
+        });
+        count++;
+        if (count > 5) {
+          // Dừng hàm setInterval
+          clearInterval(randomComputerItem);
+        }
+      }, 500);
+    },
+  };
+};
+export default connect(null, mapDispatchToProps)(GameTuXi);
