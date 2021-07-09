@@ -42,6 +42,9 @@
 .inFoGame {
   font-size: 3rem;
 }
+.inFoGame__name {
+  text-transform: uppercase;
+}
 .inFoGame__goals,
 .info__total {
   color: #45d994;

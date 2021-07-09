@@ -47,6 +47,10 @@ const mapDispatchToProps = (dispatch) => {
         if (count > 5) {
           // Dừng hàm setInterval
           clearInterval(randomComputerItem);
+
+          dispatch({
+            type: "KET_QUA",
+          });
         }
       }, 500);
     },

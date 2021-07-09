@@ -16,7 +16,7 @@ const stateDefault = {
       status: false,
     },
   ],
-  ketQua: "I'm iron man, i love you 3000 !!!",
+  ketQua: "you win!!",
   soBanThang: 0,
   soBanChoi: 0,
   mangComputer: {
@@ -48,6 +48,39 @@ const GameTuXiReducer = (state = stateDefault, action) => {
       return { ...state };
     }
 
+    case "KET_QUA":
+      let player = state.mangTuXi.find((item) => item.status);
+      let computer = state.mangComputer;
+      state.soBanChoi++;
+      switch (player.ma) {
+        case "keo":
+          if (computer.ma === "keo") state.ketQua = "you draw!!";
+          else if (computer.ma === "bua") state.ketQua = "you lost!!";
+          else {
+            state.ketQua = "you win!!";
+            state.soBanThang++;
+          }
+          break;
+        case "bua":
+          if (computer.ma === "keo") {
+            state.ketQua = "you win!!";
+            state.soBanThang++;
+          } else if (computer.ma === "bua") state.ketQua = "you draw!!";
+          else state.ketQua = "you lost!!";
+          break;
+        case "bao":
+          if (computer.ma === "keo") state.ketQua = "you lost!!";
+          else if (computer.ma === "bua") {
+            state.ketQua = "you win!!";
+            state.soBanThang++;
+          } else state.ketQua = "you draw!!";
+          break;
+        default:
+          state.ketQua = "you win!!";
+          state.soBanThang++;
+          return { ...state };
+      }
+      return { ...state };
     default:
       return { ...state };
   }
